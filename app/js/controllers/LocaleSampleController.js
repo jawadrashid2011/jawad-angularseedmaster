@@ -1,7 +1,11 @@
 'use strict';
 
 eventsApp.controller('LocaleSampleController',
-    function LocaleSampleController($scope, $compile, $parse) {
+    function LocaleSampleController($scope, $locale) {
 
-    };
+        console.log($locale);
+        $scope.myDate = Date.now();
+        $scope.myFormat = $locale.DATETIME_FORMATS.fullDate;
+        // $scope.myFormat = $locale.DATETIME_FORMATS.shortDate;
+    }
 );
