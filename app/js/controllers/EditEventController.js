@@ -1,0 +1,19 @@
+"use strict";
+/* 
+ * Created by Jawad Rashid
+ */
+eventsApp.controller("EditEventController",
+    function EditEventController($scope) {
+        $scope.saveEvent = function(event, newEventForm) {
+            console.log(newEventForm);
+            if(newEventForm.$valid) {
+                window.alert('event ' + event.name + ' saved');
+            } 
+        };
+        
+        $scope.cancelEdit = function() {
+            window.location = "EventsDetails.html"
+        };
+    }
+);
+
