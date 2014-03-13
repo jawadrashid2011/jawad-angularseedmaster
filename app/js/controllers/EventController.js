@@ -3,11 +3,11 @@
 eventsApp.controller("EventsController",
     function EventsController($scope, eventData) {
 
-        eventData.getEvent(function(event) {
-            $scope.event = event;
-        });
+        $scope.event = eventData.getEvent();
 
-        $scope.upVoteSession = function(session) {
+        $scope.upVoteSession = function(session, event) {
+            console.log(event);
+            console.log($scope.event);
             session.upVoteCount++;
         };
 
