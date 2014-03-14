@@ -5,6 +5,10 @@ eventsApp.filter("durations", function() {
         switch (duration) {
             case 1:
                 return "1 Hour"
+            case 2:
+                return "2 Hours"
+            case 3:
+                return "3 Hours"
             case 4:
                 return "4 Hours"
             case 6:
