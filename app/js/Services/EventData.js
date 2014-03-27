@@ -11,10 +11,10 @@ eventsApp.factory("eventData", function($resource, $q) {
     });
     return {
 
-        getEvent: function() {
+        getEvent: function(eventId) {
             var deferred = $q.defer();
             resource.get({
-                id: 1
+                id: eventId
             }, function(event) {
                 deferred.resolve(event);
             }, function(response) {

@@ -1,9 +1,13 @@
 'use strict';
 
 eventsApp.controller("EventsController",
-    function EventsController($scope, eventData, $anchorScroll) {
+    function EventsController($scope, eventData, $anchorScroll, $routeParams, $route) {
 
-        $scope.event = eventData.getEvent();
+        $scope.event = eventData.getEvent($routeParams.eventId);
+        // console.log($route.current.foo);
+        console.log($route.current.params.foo);
+        console.log($route.current.params.eventId);
+        console.log($route.current.pathParams.eventId);
         $scope.event.then(
             function(event) {
                 console.log(event);
@@ -13,6 +17,10 @@ eventsApp.controller("EventsController",
                 console.log(response);
             }
         );
+
+        $scope.reload = function() {
+            $route.reload();
+        }
 
         $scope.upVoteSession = function(session) {
             session.upVoteCount++;
