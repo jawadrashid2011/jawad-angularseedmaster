@@ -36,6 +36,9 @@ eventsApp.factory("eventData", function($resource, $q) {
             );
 
             return deferred.promise;
+        },
+        getAllEvents: function() {
+            return resource.query();
         }
     };
 });

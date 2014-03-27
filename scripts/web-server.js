@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 /**
  * web-server.js Borrowed from angularjs.org tutorial
  * modified to allow posting
@@ -103,8 +104,24 @@ StaticServlet.prototype.handleRequest = function(req, res) {
         return String.fromCharCode(parseInt(hex, 16));
     });
     var parts = path.split('/');
-    if (parts[parts.length - 1].charAt(0) === '.')
-        return self.sendForbidden_(req, res, path);
+    if (parts[parts.length - 1].charAt(0) === '.') {
+        console.log("I am here");
+        console.log(path);
+        // 
+        if (req.method == 'GET') {
+            if (path.indexOf('/.json') != -1) {
+                console.log("Sending All Files");
+                path = path.replace("/.json", "/");
+                return self.sendAllJsonFilesAppended_(req, res, path);
+            } else {
+                return self.sendForbidden_(req, res, path);
+            }
+        } else {
+            return self.sendForbidden_(req, res, path);
+        }
+
+    }
+
 
     if (req.method === 'POST') {
         if (self.attemptingToAccessOutsideLocalAppPath(parts)) {
@@ -118,6 +135,7 @@ StaticServlet.prototype.handleRequest = function(req, res) {
 }
 
 StaticServlet.prototype.findAndSendTarget = function(req, path, res, self) {
+
     fs.stat(path, function(err, stat) {
         if (err && path.indexOf('app/') >= 0)
             return self.sendMissing_(req, res, path);
@@ -136,11 +154,13 @@ StaticServlet.prototype.findAndSendTarget = function(req, path, res, self) {
         var indexOfSecondToLastSlash = path.lastIndexOf('/', indexOfLastSlash - 1);
         var secondToLastNode = path.substr(indexOfSecondToLastSlash + 1, indexOfLastSlash - indexOfSecondToLastSlash - 1);
         if (stat.isDirectory() && secondToLastNode != "event" && secondToLastNode != "user") {
+
             if (path.indexOf('/data/') == -1) {
                 return self.sendDefault_(req, res);
             }
             return self.sendAllJsonFilesAppended_(req, res, path);
         }
+
         return self.sendFile_(req, res, path);
     });
 }
