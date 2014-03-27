@@ -2,7 +2,7 @@
 /* 
  * Created by Jawad Rashid
  */
-eventsApp.factory("eventData", function($resource, $q) {
+eventsApp.factory("eventData", function($resource, $q, $timeout) {
     var resource = $resource('data/event/:id.json', {
         id: '@id'
     });
@@ -13,13 +13,16 @@ eventsApp.factory("eventData", function($resource, $q) {
 
         getEvent: function(eventId) {
             var deferred = $q.defer();
-            resource.get({
-                id: eventId
-            }, function(event) {
-                deferred.resolve(event);
-            }, function(response) {
-                deferred.reject(response);
-            });
+            $timeout(function() {
+                resource.get({
+                    id: eventId
+                }, function(event) {
+                    deferred.resolve(event);
+                }, function(response) {
+                    deferred.reject(response);
+                });
+            }, 3000);
+
 
             return deferred.promise;
         },

@@ -1,22 +1,22 @@
 'use strict';
 
 eventsApp.controller("EventsController",
-    function EventsController($scope, eventData, $anchorScroll, $routeParams, $route) {
+    function EventsController($scope, $anchorScroll, $routeParams, $route) {
 
-        $scope.event = eventData.getEvent($routeParams.eventId);
+        $scope.event = $route.current.locals.event;
         // console.log($route.current.foo);
-        console.log($route.current.params.foo);
-        console.log($route.current.params.eventId);
-        console.log($route.current.pathParams.eventId);
-        $scope.event.then(
-            function(event) {
-                console.log(event);
-            },
+        // console.log($route.current.params.foo);
+        // console.log($route.current.params.eventId);
+        // console.log($route.current.pathParams.eventId);
+        // $scope.event.then(
+        //     function(event) {
+        //         console.log(event);
+        //     },
 
-            function(response) {
-                console.log(response);
-            }
-        );
+        //     function(response) {
+        //         console.log(response);
+        //     }
+        // );
 
         $scope.reload = function() {
             $route.reload();
