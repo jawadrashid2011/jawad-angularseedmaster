@@ -10,23 +10,27 @@ var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource', 'ngCook
             templateUrl: 'templates/EventList.html',
             controller: 'EventListController'
         });
-    $routeProvider.when('/event/:eventId', {
-        // foo: 'bar',
-        templateUrl: 'templates/EventsDetails.html',
-        controller: 'EventsController',
-        resolve: {
-            event: function($q, $route, eventData) {
-                var deferred = $q.defer();
-                eventData.getEvent($route.current.pathParams.eventId)
-                    .then(function(event) {
-                        deferred.resolve(event);
-                    });
-                return deferred.promise;
+        $routeProvider.when('/event/:eventId', {
+            // foo: 'bar',
+            templateUrl: 'templates/EventsDetails.html',
+            controller: 'EventsController',
+            resolve: {
+                event: function($q, $route, eventData) {
+                    var deferred = $q.defer();
+                    eventData.getEvent($route.current.pathParams.eventId)
+                        .then(function(event) {
+                            deferred.resolve(event);
+                        });
+                    return deferred.promise;
+                }
             }
-        }
-    });
-    $routeProvider.otherwise({
-        redirectTo: '/events'
-    });
+        });
+        $routeProvider.when('/sampleDirective', {
+            templateUrl: 'templates/SampleDirective.html',
+            controller: 'SampleDirectiveController'
+        })
+        $routeProvider.otherwise({
+            redirectTo: '/events'
+        });
         // $locationProvider.html5Mode(true);
     });
