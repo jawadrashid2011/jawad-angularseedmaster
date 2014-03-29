@@ -5,21 +5,34 @@ eventsApp.directive('greeting', function() {
         restrict: 'E',
         replace: true,
         template: "<button class='btn' ng-click='sayHello()' >Say Hello</button>",
-        // controller: function($scope) {
-        //     $scope.sayHello = function() {
-        //         alert('Hello');
-        //     }
-        // }
-        // controller: "GreetingController"
-        controller: "@",
-        name: 'ctrl'
-    }
-});
+        controller: function($scope) {
+            var greetings = ['hello'];
+            $scope.sayHello = function() {
+                alert(greetings.join());
+            }
 
-eventsApp.controller('GreetingController',
-    function GreetingController($scope) {
-        $scope.sayHello = function() {
-            alert('Hello Jawad');
+            this.addGreeting = function(greeting) {
+                greetings.push(greeting);
+            }
         }
+
     }
-);
+})
+    .directive('urdu', function() {
+        return {
+            restrict: 'A',
+            require: 'greeting',
+            link: function(scope, element, attrs, controller) {
+                controller.addGreeting('Kiya haal Hain?');
+            }
+        }
+    })
+    .directive('arabic', function() {
+        return {
+            restrict: 'A',
+            require: 'greeting',
+            link: function(scope, element, attrs, controller) {
+                controller.addGreeting('Assalam-o-Alaikum');
+            }
+        }
+    });
